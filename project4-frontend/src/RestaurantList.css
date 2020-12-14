@@ -16,14 +16,10 @@ p{
 button{
     background-color: black;
     color: white;
-    font-size: 20px;
-    border-radius: 4px;
-    
-    position: absolute;
-    right: 60px;
+    position: relative;
+    left: 150vh;
     display: inline-block;
     border-radius: 4px;
-    
     border: none;
     vertical-align: middle;
     text-align: center;
@@ -33,6 +29,7 @@ button{
     transition: all 0.5s;
     cursor: pointer;
     margin: 5px;
+    bottom: 18vh;
 }
 
 button span {
@@ -59,3 +56,19 @@ button:hover span:after {
     opacity: 1;
     right: 0;
   }
+
+.detailview{
+  display: grid;
+  grid-template-columns: 50vw 50vw;
+}
+.reslist1{
+  grid-column: 1;
+  /* overflow: auto; */
+  overflow-y: scroll;
+}
+.resdetails{
+  grid-column: 2;
+  float: right;
+  border-style: solid;
+  border-color: black;
+}

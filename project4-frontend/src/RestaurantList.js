@@ -6,8 +6,18 @@ import './RestaurantList.css'
 export default class RestaurantList extends Component{
     constructor(){
         super()
+        this.state = {
+            isclicked : false,
+            restaurant: ''
+        }
+        this.showDetails = this.showDetails.bind(this);
     }
-
+showDetails(i){
+    this.setState({isclicked: true})
+    console.log(i.target.attributes[0].value)
+    this.setState({restaurant: i.target.attributes[0].value})
+    // this.setState({restaurant: restaurant.name})
+}
 render(){
     const restaurantList = this.props.restaurantlist.map((restaurant)=>{
         return(
@@ -15,13 +25,14 @@ render(){
         
             <h1 className='restaurant'>{restaurant.name}</h1>
             <p className='address'>{restaurant.vicinity}</p>
-            <button><span>ORDER</span>
+            <button value={restaurant.name} onClick={this.showDetails}>ORDER
             </button>
         
         </div>
         )
     })
-    // console.log(this.props)
+   
+    if(this.state.isclicked == false){
     return(
         <div>
             <h1>Your Local Restaurants:</h1>
@@ -30,5 +41,21 @@ render(){
             </div>
         </div>
     )
+    }else{
+        return(
+        <div className='detailview'>
+            <h1>Your Local Restaurants:</h1>
+            <div className='reslist1'>
+                {restaurantList}
+            </div>
+            <div className='resdetails'>
+                <h1>{this.state.restaurant}</h1>
+                <nav>
+                    
+                </nav>
+            </div>
+        </div>
+        )
+    }
 }
 }
