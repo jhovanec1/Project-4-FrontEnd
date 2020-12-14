@@ -160,8 +160,8 @@ class App extends Component {
         <main>
           <Switch>
             <Route path='/api/auth/signup/user/orders' component={MyOrders}/>
-            {/* <Route path='/api/auth/signup/user' component={(routerProps)=>(
-              <RestaurantList {...routerProps}/>)}/> */}
+            <Route path='/api/auth/signup/user' component={(routerProps)=>(
+              <RestaurantList {...routerProps} restaurantlist={this.state.restaurantlist}/>)}/>
           
           </Switch>
         </main>
