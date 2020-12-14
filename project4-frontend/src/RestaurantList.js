@@ -23,9 +23,9 @@ render(){
         return(
         <div className='list'>
         
-            <h1 className='restaurant'>{restaurant.name}</h1>
-            <p className='address'>{restaurant.vicinity}</p>
-            <button value={restaurant.name} onClick={this.showDetails}>ORDER
+            <h1 className='restaurant'>{restaurant.restaurant_name}</h1>
+            <p className='address'>{restaurant.address.formatted}</p>
+            <button value={restaurant.restaurant_name} onClick={this.showDetails}>ORDER
             </button>
         
         </div>
@@ -51,7 +51,7 @@ render(){
             <div className='resdetails'>
                 <h1>{this.state.restaurant}</h1>
                 <nav>
-                    
+
                 </nav>
             </div>
         </div>

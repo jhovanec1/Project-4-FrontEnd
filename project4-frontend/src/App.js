@@ -21,33 +21,62 @@ class App extends Component {
       distance: 2000,
       latitude: '',
       longitude: '',
+      zipcode: 0
 
 
     }
     // this.baseState = this.state
     this.logout = this.logout.bind(this);
+    this.trydocumenu = this.trydocumenu.bind(this);
   }
   componentDidMount = ()=>{
     this.getLocation();
+    console.log(this.state.restaurantlist)
+    // this.trydocumenu();
   };
- getRestaurantList = async ()=> {
-   console.log(this.state.latitude)
-   console.log(this.state.longitude)
-   let response = await axios.get(
-    `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.latitude},${this.state.longitude}&radius=5500&type=restaurant&key=AIzaSyD_Nu881UFYUOgGaLliEQ8VpeYTw1LB1CE`
-   )
-   console.log(response)
-   this.setState({restaurantlist: response.data.results})
-   console.log(this.state.restaurantlist)
+//  getRestaurantList = async ()=> {
+//    console.log(this.state.latitude)
+//    console.log(this.state.longitude)
+//    let response = await axios.get(
+//     `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.latitude},${this.state.longitude}&radius=5500&type=restaurant&key=AIzaSyD_Nu881UFYUOgGaLliEQ8VpeYTw1LB1CE`
+//    )
+//    console.log(response)
+//    this.setState({restaurantlist: response.data.results})
+//    console.log(this.state.restaurantlist)
+//  }
+ trydocumenu = async ()=>{
+   console.log(this.state.zipcode)
+   let res = ''
+  const options = {
+    method: 'GET',
+    url: `https://documenu.p.rapidapi.com/restaurants/zip_code/${this.state.zipcode}`,
+    params: {size: '30', fullmenu: 'true', top_cuisines: 'true', page: '1'},
+    headers: {
+      'x-api-key': 'ab1514d61b203d8917678cc66a9aa6c5',
+      'x-rapidapi-key': '5178deb9e5mshbd2528dbbc0e1bfp1ea1fbjsn0bf90fd05f8a',
+      'x-rapidapi-host': 'documenu.p.rapidapi.com'
+    }
+  };
+  await axios.request(options).then(function (response) {
+    // console.log(response.data);
+    res = response.data
+  }).catch(function (error) {
+    console.error(error);
+  });
+  
+  this.setState({restaurantlist: res.data})
+  console.log(this.state.restaurantlist)
  }
+ 
  getLocation = async ()=>{
    let response = await axios.get('https://api.ipgeolocation.io/ipgeo?apiKey=25b4efee1bfe40a28d0e03652fded5dd')
-   
+   console.log(response)
   //  console.log(response.data.latitude)
   //  console.log(response.data.longitude)
    this.setState({latitude: response.data.latitude})
    this.setState({longitude: response.data.longitude})
-   this.getRestaurantList();
+   this.setState({zipcode: response.data.zipcode})
+   this.trydocumenu();
    
  }
  getProfile = async ()=>{
