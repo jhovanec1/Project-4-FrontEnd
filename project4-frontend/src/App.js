@@ -5,7 +5,9 @@ import './App.css';
 import UserLogin from './UserLogin';
 import CarrierLogin from './CarrierLogin';
 import RestaurantLogin from './RestaurantLogin';
+import MyOrders from './MyOrders';
 import axios from "axios";
+import RestaurantList from './RestaurantList';
 
 class App extends Component {
   constructor(){
@@ -14,12 +16,42 @@ class App extends Component {
       userid: 0,
       userinfo: '',
       loggedIn: false,
-      key: '23b2ca9ccd8bf6aeb3e62dec2f4d6019'
+      zomatokey: '23b2ca9ccd8bf6aeb3e62dec2f4d6019',
+      restaurantlist: '',
+      distance: 2000,
+      latitude: '',
+      longitude: '',
+
 
     }
+    // this.baseState = this.state
+    this.logout = this.logout.bind(this);
   }
+  componentDidMount = ()=>{
+    this.getLocation();
+  };
+ getRestaurantList = async ()=> {
+   console.log(this.state.latitude)
+   console.log(this.state.longitude)
+   let response = await axios.get(
+    `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.latitude},${this.state.longitude}&radius=5500&type=restaurant&key=AIzaSyD_Nu881UFYUOgGaLliEQ8VpeYTw1LB1CE`
+   )
+   console.log(response)
+   this.setState({restaurantlist: response.data.results})
+   console.log(this.state.restaurantlist)
+ }
+ getLocation = async ()=>{
+   let response = await axios.get('https://api.ipgeolocation.io/ipgeo?apiKey=25b4efee1bfe40a28d0e03652fded5dd')
+   
+  //  console.log(response.data.latitude)
+  //  console.log(response.data.longitude)
+   this.setState({latitude: response.data.latitude})
+   this.setState({longitude: response.data.longitude})
+   this.getRestaurantList();
+   
+ }
  getProfile = async ()=>{
-  //  e.preventDefault();
+  
    let response = await axios.get(
      `http://localhost:3001/api/users/profile/${this.state.userid}`
    )
@@ -52,14 +84,13 @@ class App extends Component {
       }
     );
     console.log(response.data.info)
-    if(response == ''){
-      console.log('no')
-    }
+    // if(response == ''){
+    //   console.log('no')
+    // }
     this.setState({userid: response.data.info})
     
     this.getProfile();
-    // if response comes back not error, send username to new function which does get request for profile
-    // save profile in the state/cookie so that it is held. Then render local restaurant list page
+    
   }
   createCarrier = async (e) => {
     e.preventDefault();
@@ -82,6 +113,10 @@ class App extends Component {
         password: e.target.password.value
       }
     );
+  }
+  logout(){
+    this.setState({loggedIn: false})
+    console.log(this.state)
   }
   render(){
   if(this.state.loggedIn != true){
@@ -116,12 +151,20 @@ class App extends Component {
         <header className="App-header">
           <h1>Welcome back, {this.state.userinfo.user.name}. What do you have a taste for?</h1>
           <nav>
-          <Link to='api/user/orders'className='li'>MY ORDERS</Link>
-          
+          <Link to='/api/auth/signup/user/orders'onClick={console.log('orders')}className='li'>MY ORDERS</Link>
+          <Link to= '/api/auth/signup/user' className='li'>ORDER NOW</Link>
 
-          <Link to='/'className='li'>LOGOUT</Link>
+          <Link to='/'onClick={this.logout} className='li'>LOGOUT</Link>
         </nav>
         </header>
+        <main>
+          <Switch>
+            <Route path='/api/auth/signup/user/orders' component={MyOrders}/>
+            {/* <Route path='/api/auth/signup/user' component={(routerProps)=>(
+              <RestaurantList {...routerProps}/>)}/> */}
+          
+          </Switch>
+        </main>
         
       </div>
     )
