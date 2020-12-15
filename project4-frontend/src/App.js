@@ -180,6 +180,7 @@ class App extends Component {
         <header className="App-header">
           <h1>Welcome back, {this.state.userinfo.user.name}. What do you have a taste for?</h1>
           <nav>
+          <Link to='/api/auth/signup/user/account' className='li'>MY ACCOUNT</Link>
           <Link to='/api/auth/signup/user/orders'onClick={console.log('orders')}className='li'>MY ORDERS</Link>
           <Link to= '/api/auth/signup/user' className='li'>ORDER NOW</Link>
 

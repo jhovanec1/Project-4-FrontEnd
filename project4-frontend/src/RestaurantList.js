@@ -2,30 +2,39 @@ import { render } from '@testing-library/react'
 import React, { Component } from 'react'
 import {Route, Link, Switch, Redirect} from 'react-router-dom'
 import './RestaurantList.css'
+import RestaurantDetail from './RestaurantDetail'
 
 export default class RestaurantList extends Component{
     constructor(){
         super()
         this.state = {
             isclicked : false,
-            restaurant: ''
+            restaurant: '',
+            restaurantdeats: ''
         }
         this.showDetails = this.showDetails.bind(this);
+        // this.findDetails = this.findDetails.bind(this);
     }
 showDetails(i){
+    // console.log(i.target.id)
     this.setState({isclicked: true})
-    console.log(i.target.attributes[0].value)
+    // console.log(i.target.attributes[0].value)
     this.setState({restaurant: i.target.attributes[0].value})
-    // this.setState({restaurant: restaurant.name})
+    let info = this.props.restaurantlist[i.target.id]
+    // console.log(info)
+    this.setState({restaurantdeats: info})
+    
 }
+
 render(){
-    const restaurantList = this.props.restaurantlist.map((restaurant)=>{
+    const restaurantList = this.props.restaurantlist.map((restaurant, index)=>{
         return(
         <div className='list'>
         
             <h1 className='restaurant'>{restaurant.restaurant_name}</h1>
             <p className='address'>{restaurant.address.formatted}</p>
-            <button value={restaurant.restaurant_name} onClick={this.showDetails}>ORDER
+            <p className='phone'>{restaurant.restaurant_phone}</p>
+            <button value={restaurant.restaurant_name} id={index} onClick={this.showDetails}>ORDER
             </button>
         
         </div>
@@ -50,9 +59,9 @@ render(){
             </div>
             <div className='resdetails'>
                 <h1>{this.state.restaurant}</h1>
-                <nav>
-
-                </nav>
+                <div>
+                    <RestaurantDetail restaurant= {this.state.restaurantdeats}/>
+                </div>
             </div>
         </div>
         )
