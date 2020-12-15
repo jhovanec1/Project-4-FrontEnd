@@ -1,0 +1,8 @@
+.cart{
+    list-style-type: none;
+    border-style: solid;
+    border-color: black;
+    margin: 8px;
+    /* display: inline-block; */
+
+}

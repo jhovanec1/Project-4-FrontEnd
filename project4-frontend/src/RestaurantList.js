@@ -16,9 +16,7 @@ export default class RestaurantList extends Component{
         // this.findDetails = this.findDetails.bind(this);
     }
 showDetails(i){
-    // console.log(i.target.id)
     this.setState({isclicked: true})
-    // console.log(i.target.attributes[0].value)
     this.setState({restaurant: i.target.attributes[0].value})
     let info = this.props.restaurantlist[i.target.id]
     // console.log(info)

@@ -1,0 +1,9 @@
+.menuitem{
+    border-style: solid;
+    border-color: black;
+    padding: 20px;
+    /* margin: 12px; */
+}
+button{
+    font-size: 15px;
+}

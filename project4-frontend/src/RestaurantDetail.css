@@ -2,6 +2,7 @@
     overflow: auto;
     background-color: black;
     white-space: nowrap;
+    /* position: relative; */
 
 }
 .menulist a{
@@ -15,4 +16,7 @@
 .menulist a:hover{
     background-color: grey;
     cursor: pointer;
+}
+.menulist a:active{
+    background-color: grey;
 }
