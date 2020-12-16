@@ -58,7 +58,7 @@ render(){
             <div className='resdetails'>
                 <h1>{this.state.restaurant}</h1>
                 <div>
-                    <RestaurantDetail restaurant= {this.state.restaurantdeats}/>
+                    <RestaurantDetail restaurant= {this.state.restaurantdeats} userid = {this.props.userid}/>
                 </div>
             </div>
         </div>

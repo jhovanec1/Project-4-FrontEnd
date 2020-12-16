@@ -13,7 +13,8 @@ export default class RestaurantDetail extends Component{
             isClicked: false,
             menu: '',
             cart: [],
-            restaurant: ''
+            restaurant: '',
+            orderCompleted: false,
         }
         this.getList = this.getList.bind(this);
         this.addToCart = this.addToCart.bind(this);
@@ -22,11 +23,29 @@ addOrder = async ()=>{
     let response = await Axios.get(
         'http://localhost:3001/api/restaurants/'
     )
-    console.log(response)
-    this.state.cart.map((line)=>{
+    // console.log(response.data.users)
+    let restarray = response.data.users
+    let userid = this.props.userid
+    this.state.cart.map(async(line)=>{
         let restaurantid = 0;
+        // console.log(line)
+        let restinfo = restarray.find((b) => { return b.name == line.resname;})
+        // console.log(restinfo.id)
+        let newresponse = await Axios.post(
+            'http://localhost:3001/api/order',
+            {
+                userId: userid,
+                restaurantId: restinfo.id,
+                carrierId: 1,
+                item: line.name,
+                price:line.price
+                
 
+            }
+        )
     })
+    this.setState({orderCompleted: true})
+    this.setState({cart: []})
 }
 getList(i){
     this.setState({isClicked:false})
@@ -90,7 +109,7 @@ render(){
             {menuList}
         </div>
         <div className='menu'>
-            <RestaurantMenu isClicked={this.state.isClicked} menu = {this.state.menu} addToCart={this.addToCart} addRestaurant={this.addRestaurant}/>
+            <RestaurantMenu isClicked={this.state.isClicked} menu = {this.state.menu} addToCart={this.addToCart} addRestaurant={this.addRestaurant} orderCompleted={this.state.orderCompleted}/>
         </div>
         <div className='cart'>
             <h1>CART</h1>

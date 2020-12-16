@@ -9,7 +9,7 @@ export default class Cart extends Component{
     // }
 
 render(){
-    console.log(this.props.cart)
+    // console.log(this.props.cart)
     let restaurant = this.props.restaurant.restaurant_name
     const cart = this.props.cart.map((item)=>{
         return(

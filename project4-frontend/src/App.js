@@ -8,6 +8,7 @@ import RestaurantLogin from './RestaurantLogin';
 import MyOrders from './MyOrders';
 import axios from "axios";
 import RestaurantList from './RestaurantList';
+import UserAccount from './UserAccount';
 
 class App extends Component {
   constructor(){
@@ -21,13 +22,15 @@ class App extends Component {
       distance: 2000,
       latitude: '',
       longitude: '',
-      zipcode: 0
+      zipcode: 0,
+      userorders:''
 
 
     }
     // this.baseState = this.state
     this.logout = this.logout.bind(this);
     this.trydocumenu = this.trydocumenu.bind(this);
+    this.getOrders = this.getOrders.bind(this);
   }
   componentDidMount = ()=>{
     this.getLocation();
@@ -87,6 +90,8 @@ class App extends Component {
    console.log(response.data)
    this.setState({userinfo: response.data})
    this.setState({loggedIn : true})
+   console.log(this.state.userinfo)
+   this.getOrders();
    
  }
  createUser = async (e) => {
@@ -102,6 +107,13 @@ class App extends Component {
     // console.log(response.data.info)
     this.setState({userid: response.data.info})
     this.getProfile();
+  }
+  getOrders = async ()=>{
+    let response = await axios.get(
+      `http://localhost:3001/api/order/${this.state.userid}`
+    )
+    console.log(response.data.orders)
+    // this.setState({userorders})
   }
   loginUser = async (e)=>{
     e.preventDefault();
@@ -167,7 +179,7 @@ class App extends Component {
       <Route path = '/api/auth/signup/carrier' component={(routerProps)=> (
         <CarrierLogin {...routerProps} createCarrier={(e) => this.createCarrier(e)}/>)}/>
       <Route path = '/api/auth/signup/restaurant' component={(routerProps)=> (
-        <RestaurantLogin {...routerProps} createRestaurant={(e) => this.createRestaurant(e)}/>)}/>
+        <RestaurantLogin {...routerProps} createRestaurant={(e) => this.createRestaurant(e)} />)}/>
       </Switch>
       </main>
     </div>
@@ -181,7 +193,7 @@ class App extends Component {
           <h1>Welcome back, {this.state.userinfo.user.name}. What do you have a taste for?</h1>
           <nav>
           <Link to='/api/auth/signup/user/account' className='li'>MY ACCOUNT</Link>
-          <Link to='/api/auth/signup/user/orders'onClick={console.log('orders')}className='li'>MY ORDERS</Link>
+          <Link to='/api/auth/signup/user/orders'onClick={this.getOrders}className='li'>MY ORDERS</Link>
           <Link to= '/api/auth/signup/user' className='li'>ORDER NOW</Link>
 
           <Link to='/'onClick={this.logout} className='li'>LOGOUT</Link>
@@ -190,9 +202,10 @@ class App extends Component {
         <main>
           <Switch>
             <Route path='/api/auth/signup/user/orders' component={MyOrders}/>
+            <Route path='/api/auth/signup/user/account' component={UserAccount}/>
             <Route path='/api/auth/signup/user' component={(routerProps)=>(
-              <RestaurantList {...routerProps} restaurantlist={this.state.restaurantlist}/>)}/>
-          
+              <RestaurantList {...routerProps} restaurantlist={this.state.restaurantlist} userid={this.state.userid}/>)}/>
+            
           </Switch>
         </main>
         

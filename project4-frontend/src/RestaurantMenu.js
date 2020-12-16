@@ -9,12 +9,19 @@ export default class RestaurantMenu extends Component{
     }
 
 render(){
-    console.log(this.props.isClicked)
+    console.log(this.props.orderCompleted)
     // console.log(this.props.menu)
     if(this.props.isClicked == false){
     return(
         <div>
             <h1>CLICK ON A MENU SECTION</h1>
+        </div>
+    )
+    }else if(this.props.orderCompleted == true){
+    return(
+        <div>
+            <h1>ORDER COMPLETED</h1>
+            <p1>CLICK ON THE MY ORDERS TAB TO VIEW DETAILS</p1>
         </div>
     )
     }else{
