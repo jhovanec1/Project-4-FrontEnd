@@ -19,6 +19,15 @@ render(){
             <input type="submit" value="SIGN UP" />
             </form>
         </div>
+        <div>
+            <h1>Carrier Login</h1>
+            <form onSubmit={(e) => this.props.loginCarrier(e)}>
+            <input type="text" name="username" placeholder="Username" />
+            <input type="text" name="password" placeholder="Password" />
+            <input type="submit" value="LOGIN" />
+            </form>
+
+        </div>
         </div>
     )
 }

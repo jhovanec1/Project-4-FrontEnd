@@ -38,7 +38,7 @@ addOrder = async ()=>{
             {
                 userId: userid,
                 restaurantId: restinfo.id,
-                carrierId: 1,
+                carrierId: 4,
                 item: line.name,
                 price: price,
                 isDelivered: false

@@ -9,6 +9,7 @@ import MyOrders from './MyOrders';
 import axios from "axios";
 import RestaurantList from './RestaurantList';
 import UserAccount from './UserAccount';
+import CarrierOrders from './CarrierOrders';
 
 class App extends Component {
   constructor(){
@@ -24,7 +25,11 @@ class App extends Component {
       longitude: '',
       zipcode: 0,
       userorders:'',
-      restaurantarry:''
+      restaurantarry:'',
+      carrierid: 0,
+      carrierinfo: '',
+      carrierloggedin: false,
+      carrierorders:''
 
 
     }
@@ -76,7 +81,6 @@ class App extends Component {
   let response = await axios.get(
       'http://localhost:3001/api/restaurants/'
   )
-  // console.log(response)
   this.setState({restaurantarry: response.data.users})
 
  }
@@ -84,8 +88,6 @@ class App extends Component {
  getLocation = async ()=>{
    let response = await axios.get('https://api.ipgeolocation.io/ipgeo?apiKey=25b4efee1bfe40a28d0e03652fded5dd')
    console.log(response)
-  //  console.log(response.data.latitude)
-  //  console.log(response.data.longitude)
    this.setState({latitude: response.data.latitude})
    this.setState({longitude: response.data.longitude})
    this.setState({zipcode: response.data.zipcode})
@@ -126,6 +128,15 @@ class App extends Component {
     this.setState({userorders: response.data.orders})
     this.getRestaurant();
   }
+  getCarrierOrders = async ()=>{
+    let response = await axios.get(
+      `http://localhost:3001/api/order/carrier/${this.state.carrierid}`
+    )
+    this.setState({carrierorders: response.data.orders})
+    console.log(response.data.orders)
+    this.getRestaurant();
+    
+  }
   loginUser = async (e)=>{
     e.preventDefault();
     let response = await axios.post(
@@ -135,13 +146,33 @@ class App extends Component {
         password: e.target.password.value
       }
     );
-    console.log(response.data.info)
-    // if(response == ''){
-    //   console.log('no')
-    // }
     this.setState({userid: response.data.info})
     
     this.getProfile();
+    
+  }
+  getCarrierProfile = async ()=>{
+  
+    let response = await axios.get(
+      `http://localhost:3001/api/carriers/profile/${this.state.carrierid}`
+    )
+    console.log(response.data)
+    this.setState({carrierinfo: response.data})
+    this.setState({carrierloggedin: true})
+    this.getCarrierOrders();
+  }
+  loginCarrier = async (e)=>{
+    e.preventDefault();
+    let response = await axios.post(
+      'http://localhost:3001/api/auth/login/carrier',
+      {
+        username: e.target.username.value,
+        password: e.target.password.value
+      }
+    );
+    this.setState({carrierid: response.data.info})
+    this.getCarrierProfile();
+    console.log('logged in')
     
   }
   createCarrier = async (e) => {
@@ -166,8 +197,15 @@ class App extends Component {
       }
     );
   }
+  completeOrder = async(e)=>{
+    // let response = await axios.put(
+
+    // )
+    console.log(e)
+  }
   logout(){
     this.setState({loggedIn: false})
+    this.setState({carrierloggedin: false})
     console.log(this.state)
   }
   updateUser = async (e)=>{
@@ -183,7 +221,7 @@ class App extends Component {
     // console.log(response)
   }
   render(){
-  if(this.state.loggedIn != true){
+  if(this.state.loggedIn != true && this.state.carrierloggedin != true){
   return (
     <div className="App">
       <h1>DelivApp</h1>
@@ -200,7 +238,8 @@ class App extends Component {
         <UserLogin {...routerProps} createUser={(e) => this.createUser(e)}
         loginUser={(e)=> this.loginUser(e)}/>)}/>
       <Route path = '/api/auth/signup/carrier' component={(routerProps)=> (
-        <CarrierLogin {...routerProps} createCarrier={(e) => this.createCarrier(e)}/>)}/>
+        <CarrierLogin {...routerProps} createCarrier={(e) => this.createCarrier(e)}
+        loginCarrier={(e)=>this.loginCarrier(e)}/>)}/>
       <Route path = '/api/auth/signup/restaurant' component={(routerProps)=> (
         <RestaurantLogin {...routerProps} createRestaurant={(e) => this.createRestaurant(e)} />)}/>
       </Switch>
@@ -208,7 +247,8 @@ class App extends Component {
     </div>
   );
       }
-  else{
+  else if(this.state.loggedIn == true)
+  {
     return(
       <div className='App'>
         <h1>DelivApp</h1>
@@ -234,6 +274,28 @@ class App extends Component {
               <RestaurantList {...routerProps} restaurantlist={this.state.restaurantlist} userid={this.state.userid}/>)}/>
             
           </Switch>
+        </main>
+        
+      </div>
+    )
+  }else{
+    console.log(this.state.carrierinfo.carrier.username)
+    return(
+      <div className='App'>
+        <h1>DelivApp</h1>
+        <header className="App-header">
+          <h1>Welcome back, {this.state.carrierinfo.carrier.username}. Want to make money?</h1>
+          <nav>
+          <Link to='/api/auth/signup/carrier/account' className='li'>MY ACCOUNT</Link>
+          <Link to='/api/auth/signup/carrier/orders'onClick={this.getCarrierOrders}className='li'>MY ORDERS</Link>
+          
+          <Link to='/'onClick={this.logout} className='li'>LOGOUT</Link>
+        </nav>
+        </header>
+        <main>
+        <Route path='/api/auth/signup/carrier/orders' component={(routerProps)=>(
+              <CarrierOrders {...routerProps} completeOrder = {(e)=>this.completeOrder(e)} orders={this.state.carrierorders} restaurants = {this.state.restaurantarry}/>
+            )}/>
         </main>
         
       </div>
