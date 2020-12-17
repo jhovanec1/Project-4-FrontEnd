@@ -24,6 +24,11 @@ render(){
         }else{
             hour = hour
         }
+        if(favoriteBook == undefined){
+            favoriteBook.name = ''
+        }else{
+            favoriteBook = favoriteBook
+        }
         let minute = parseFloat(order.createdAt.substring(19,14),10)
         let seconds = parseFloat(order.createdAt.substring(19,17))
         let ampm = ''
