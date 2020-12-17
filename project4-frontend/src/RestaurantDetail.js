@@ -5,6 +5,8 @@ import './RestaurantDetail.css'
 import RestaurantMenu from './RestaurantMenu'
 import Cart from './Cart'
 import Axios from 'axios'
+const backendUrl = 
+  process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001/api';
 
 export default class RestaurantDetail extends Component{
     constructor(){
@@ -34,7 +36,7 @@ addOrder = async ()=>{
         console.log(typeof line.price)
         let price = parseInt(line.price)
         let newresponse =  await Axios.post(
-            'http://localhost:3001/api/order',
+            `${backendUrl}/order`,
             {
                 userId: userid,
                 restaurantId: restinfo.id,
@@ -78,7 +80,7 @@ addToCart(i){
 }
 addNewRestaurant = async (e)=>{
     let response = await Axios.post(
-        'http://localhost:3001/api/restaurants/',
+        `${backendUrl}/restaurants/`,
         {
             name: this.props.restaurant.restaurant_name,
             username: this.props.restaurant.restaurant_name,
@@ -92,7 +94,7 @@ addNewRestaurant = async (e)=>{
 checkRestaurant = async (e)=>{
     // e.preventDefault();
     let response = await Axios.get(
-        'http://localhost:3001/api/restaurants/'
+        `${backendUrl}/restaurants/`
     )
     
     let reslist = response.data.users

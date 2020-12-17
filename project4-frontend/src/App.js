@@ -10,6 +10,8 @@ import axios from "axios";
 import RestaurantList from './RestaurantList';
 import UserAccount from './UserAccount';
 import CarrierOrders from './CarrierOrders';
+const backendUrl = 
+  process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001/api';
 
 class App extends Component {
   constructor(){
@@ -79,7 +81,7 @@ class App extends Component {
  }
  getRestaurant = async (e)=>{
   let response = await axios.get(
-      'http://localhost:3001/api/restaurants/'
+      `${backendUrl}/restaurants/`
   )
   this.setState({restaurantarry: response.data.users})
 
@@ -97,7 +99,7 @@ class App extends Component {
  getProfile = async ()=>{
   
    let response = await axios.get(
-     `http://localhost:3001/api/users/profile/${this.state.userid}`
+     `${backendUrl}/users/profile/${this.state.userid}`
    )
    console.log(response.data)
    this.setState({userinfo: response.data})
@@ -109,7 +111,7 @@ class App extends Component {
  createUser = async (e) => {
     e.preventDefault();
     let response = await axios.post(
-      `http://localhost:3001/api/auth/signup/user`,
+      `${backendUrl}/auth/signup/user`,
       {
         name: e.target.name.value,
         username: e.target.username.value,
@@ -122,7 +124,7 @@ class App extends Component {
   }
   getOrders = async ()=>{
     let response = await axios.get(
-      `http://localhost:3001/api/order/${this.state.userid}`
+      `${backendUrl}/order/${this.state.userid}`
     )
     console.log(response.data.orders)
     this.setState({userorders: response.data.orders})
@@ -130,7 +132,7 @@ class App extends Component {
   }
   getCarrierOrders = async ()=>{
     let response = await axios.get(
-      `http://localhost:3001/api/order/carrier/${this.state.carrierid}`
+      `${backendUrl}/order/carrier/${this.state.carrierid}`
     )
     this.setState({carrierorders: response.data.orders})
     console.log(response.data.orders)
@@ -140,7 +142,7 @@ class App extends Component {
   loginUser = async (e)=>{
     e.preventDefault();
     let response = await axios.post(
-      `http://localhost:3001/api/auth/login`,
+      `${backendUrl}/auth/login`,
       {
         username: e.target.username.value,
         password: e.target.password.value
@@ -154,7 +156,7 @@ class App extends Component {
   getCarrierProfile = async ()=>{
   
     let response = await axios.get(
-      `http://localhost:3001/api/carriers/profile/${this.state.carrierid}`
+      `${backendUrl}/carriers/profile/${this.state.carrierid}`
     )
     console.log(response.data)
     this.setState({carrierinfo: response.data})
@@ -164,7 +166,7 @@ class App extends Component {
   loginCarrier = async (e)=>{
     e.preventDefault();
     let response = await axios.post(
-      'http://localhost:3001/api/auth/login/carrier',
+      `${backendUrl}/auth/login/carrier`,
       {
         username: e.target.username.value,
         password: e.target.password.value
@@ -178,7 +180,7 @@ class App extends Component {
   createCarrier = async (e) => {
     e.preventDefault();
     let response = await axios.post(
-      `http://localhost:3001/api/auth/signup/carrier`,
+      `${backendUrl}/auth/signup/carrier`,
       {
         name: e.target.name.value,
         username: e.target.username.value,
@@ -189,7 +191,7 @@ class App extends Component {
   createRestaurant = async (e) => {
     e.preventDefault();
     let response = await axios.post(
-      `http://localhost:3001/api/auth/signup/restaurant`,
+      `${backendUrl}/auth/signup/restaurant`,
       {
         name: e.target.name.value,
         username: e.target.username.value,
@@ -211,7 +213,7 @@ class App extends Component {
   updateUser = async (e)=>{
     e.preventDefault();
     let response = await axios.put(
-      `http://localhost:3001/api/users/${this.state.userid}`,
+      `${backendUrl}/users/${this.state.userid}`,
       {
         name: e.target.name.value,
         username: e.target.username.value,
