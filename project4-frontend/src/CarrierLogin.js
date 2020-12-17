@@ -10,13 +10,15 @@ export default class CarrierLogin extends Component{
 render(){
     return(
         <div>
-            <h1>Carrier Login</h1>
+        <div>
+            <h1>Carrier Signup</h1>
             <form onSubmit={(e) => this.props.createCarrier(e)}>
             <input type="text" name="name" placeholder="Name" />
             <input type="text" name="username" placeholder="Username" />
             <input type="text" name="password" placeholder="Password" />
             <input type="submit" value="SIGN UP" />
             </form>
+        </div>
         </div>
     )
 }

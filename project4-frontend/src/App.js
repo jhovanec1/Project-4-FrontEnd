@@ -23,7 +23,8 @@ class App extends Component {
       latitude: '',
       longitude: '',
       zipcode: 0,
-      userorders:''
+      userorders:'',
+      restaurantarry:''
 
 
     }
@@ -31,6 +32,7 @@ class App extends Component {
     this.logout = this.logout.bind(this);
     this.trydocumenu = this.trydocumenu.bind(this);
     this.getOrders = this.getOrders.bind(this);
+    this.updateUser = this.updateUser.bind(this);
   }
   componentDidMount = ()=>{
     this.getLocation();
@@ -69,6 +71,14 @@ class App extends Component {
   
   this.setState({restaurantlist: res.data})
   console.log(this.state.restaurantlist)
+ }
+ getRestaurant = async (e)=>{
+  let response = await axios.get(
+      'http://localhost:3001/api/restaurants/'
+  )
+  // console.log(response)
+  this.setState({restaurantarry: response.data.users})
+
  }
  
  getLocation = async ()=>{
@@ -113,7 +123,8 @@ class App extends Component {
       `http://localhost:3001/api/order/${this.state.userid}`
     )
     console.log(response.data.orders)
-    // this.setState({userorders})
+    this.setState({userorders: response.data.orders})
+    this.getRestaurant();
   }
   loginUser = async (e)=>{
     e.preventDefault();
@@ -159,6 +170,18 @@ class App extends Component {
     this.setState({loggedIn: false})
     console.log(this.state)
   }
+  updateUser = async (e)=>{
+    e.preventDefault();
+    let response = await axios.put(
+      `http://localhost:3001/api/users/${this.state.userid}`,
+      {
+        name: e.target.name.value,
+        username: e.target.username.value,
+        // password: e.target.password.value
+      }
+    )
+    // console.log(response)
+  }
   render(){
   if(this.state.loggedIn != true){
   return (
@@ -201,8 +224,12 @@ class App extends Component {
         </header>
         <main>
           <Switch>
-            <Route path='/api/auth/signup/user/orders' component={MyOrders}/>
-            <Route path='/api/auth/signup/user/account' component={UserAccount}/>
+            <Route path='/api/auth/signup/user/orders' component={(routerProps)=>(
+              <MyOrders {...routerProps} orders={this.state.userorders} restaurants = {this.state.restaurantarry}/>
+            )}/>
+            <Route path='/api/auth/signup/user/account' component={(routerProps)=>(
+              <UserAccount {...routerProps} user={this.state.userinfo} updateUser={(e)=>this.updateUser(e)}/>
+            )}/>
             <Route path='/api/auth/signup/user' component={(routerProps)=>(
               <RestaurantList {...routerProps} restaurantlist={this.state.restaurantlist} userid={this.state.userid}/>)}/>
             

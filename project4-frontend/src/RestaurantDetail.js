@@ -15,38 +15,48 @@ export default class RestaurantDetail extends Component{
             cart: [],
             restaurant: '',
             orderCompleted: false,
+            restaurants: ''
         }
         this.getList = this.getList.bind(this);
         this.addToCart = this.addToCart.bind(this);
     }
 addOrder = async ()=>{
-    let response = await Axios.get(
-        'http://localhost:3001/api/restaurants/'
-    )
+    // let response = await Axios.get(
+    //     'http://localhost:3001/api/restaurants/'
+    // )
     // console.log(response.data.users)
-    let restarray = response.data.users
+    let restarray = this.state.restaurants
     let userid = this.props.userid
     this.state.cart.map(async(line)=>{
         let restaurantid = 0;
         // console.log(line)
         let restinfo = restarray.find((b) => { return b.name == line.resname;})
-        // console.log(restinfo.id)
-        let newresponse = await Axios.post(
+        console.log(typeof line.price)
+        let price = parseInt(line.price)
+        let newresponse =  await Axios.post(
             'http://localhost:3001/api/order',
             {
                 userId: userid,
                 restaurantId: restinfo.id,
                 carrierId: 1,
                 item: line.name,
-                price:line.price
+                price: price,
+                isDelivered: false
                 
 
             }
         )
+        console.log(newresponse)
     })
     this.setState({orderCompleted: true})
-    this.setState({cart: []})
+    // this.setState({cart: []})
+    
+    console.log('completed')
 }
+// postOrder(line,restinfo){
+//     console.log(line)
+//     console.log(restinfo)
+// }
 getList(i){
     this.setState({isClicked:false})
     this.setState({isClicked: true})
@@ -77,6 +87,7 @@ addNewRestaurant = async (e)=>{
             address: this.props.restaurant.address.formatted
         }
     )
+    console.log('Restaurant added')
 }
 checkRestaurant = async (e)=>{
     // e.preventDefault();
@@ -85,6 +96,7 @@ checkRestaurant = async (e)=>{
     )
     
     let reslist = response.data.users
+    this.setState({restaurants: reslist})
     let name = this.props.restaurant.restaurant_name
     const favoriteBook = reslist.find((b) => { return b.name == name;});
     if(typeof favoriteBook === 'undefined'){
