@@ -10,8 +10,7 @@ import axios from "axios";
 import RestaurantList from './RestaurantList';
 import UserAccount from './UserAccount';
 import CarrierOrders from './CarrierOrders';
-const backendUrl = 
-  process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001/api';
+const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001/api';
 
 class App extends Component {
   constructor(){
