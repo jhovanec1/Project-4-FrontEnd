@@ -90,6 +90,7 @@ addNewRestaurant = async (e)=>{
         }
     )
     console.log('Restaurant added')
+    this.checkRestaurant();
 }
 checkRestaurant = async (e)=>{
     // e.preventDefault();
