@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react'
 import React, { Component } from 'react'
 import {Route, Link, Switch, Redirect} from 'react-router-dom'
+import './UserAccount.css'
 
 export default class UserAccount extends Component{
     constructor(){

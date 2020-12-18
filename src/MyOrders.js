@@ -9,7 +9,7 @@ export default class MyOrders extends Component{
     }
 
 render(){
-    // console.log(this.props.orders)
+    console.log(this.props.orders)
     let reverse = this.props.orders.reverse();
     // console.log(reverse)
     let orderlist = reverse.map((order, index)=>{
