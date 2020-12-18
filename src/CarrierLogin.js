@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react'
 import React, { Component } from 'react'
 import {Route, Link, Switch, Redirect} from 'react-router-dom'
+import './CarrierLogin.css'
 
 export default class CarrierLogin extends Component{
     constructor(){

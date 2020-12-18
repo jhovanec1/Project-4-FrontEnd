@@ -30,7 +30,8 @@ class App extends Component {
       carrierid: 0,
       carrierinfo: '',
       carrierloggedin: false,
-      carrierorders:''
+      carrierorders:'',
+      status: 'none'
 
 
     }
@@ -99,6 +100,7 @@ class App extends Component {
    
  }
  createUser = async (e) => {
+    this.setState({status: 'loading'})
     e.preventDefault();
     let response = await axios.post(
       `${backendUrl}/auth/signup/user`,
@@ -131,6 +133,7 @@ class App extends Component {
     
   }
   loginUser = async (e)=>{
+    this.setState({status: 'loading'})
     e.preventDefault();
     let response = await axios.post(
       `${backendUrl}/auth/login`,
@@ -155,6 +158,7 @@ class App extends Component {
     this.getCarrierOrders();
   }
   loginCarrier = async (e)=>{
+    this.setState({status: 'loading'})
     e.preventDefault();
     let response = await axios.post(
       `${backendUrl}/auth/login/carrier`,
@@ -169,6 +173,7 @@ class App extends Component {
     
   }
   createCarrier = async (e) => {
+    this.setState({status: 'loading'})
     e.preventDefault();
     let response = await axios.post(
       `${backendUrl}/auth/signup/carrier`,
@@ -180,6 +185,7 @@ class App extends Component {
     );
   }
   createRestaurant = async (e) => {
+    this.setState({status: 'loading'})
     e.preventDefault();
     let response = await axios.post(
       `${backendUrl}/auth/signup/restaurant`,
@@ -231,7 +237,7 @@ class App extends Component {
         <Switch>
       <Route path = '/api/auth/signup/user' component={(routerProps)=> (
         <UserLogin {...routerProps} createUser={(e) => this.createUser(e)}
-        loginUser={(e)=> this.loginUser(e)}/>)}/>
+        loginUser={(e)=> this.loginUser(e)} status = {this.state.status}/>)}/>
       <Route path = '/api/auth/signup/carrier' component={(routerProps)=> (
         <CarrierLogin {...routerProps} createCarrier={(e) => this.createCarrier(e)}
         loginCarrier={(e)=>this.loginCarrier(e)}/>)}/>
