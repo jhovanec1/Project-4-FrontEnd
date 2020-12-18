@@ -143,6 +143,7 @@ class App extends Component {
       }
     );
     this.setState({userid: response.data.info})
+    console.log(response)
     
     this.getProfile();
     
@@ -220,7 +221,7 @@ class App extends Component {
     // console.log(response)
   }
   render(){
-  if(this.state.loggedIn != true && this.state.carrierloggedin != true){
+  if(this.state.loggedIn != true && this.state.carrierloggedin != true || this.state.restaurantlist == ''){
   return (
     <div className="App">
       <div className='sign'>
