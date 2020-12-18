@@ -43,18 +43,9 @@ class App extends Component {
   componentDidMount = ()=>{
     this.getLocation();
     console.log(this.state.restaurantlist)
-    // this.trydocumenu();
+    
   };
-//  getRestaurantList = async ()=> {
-//    console.log(this.state.latitude)
-//    console.log(this.state.longitude)
-//    let response = await axios.get(
-//     `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.latitude},${this.state.longitude}&radius=5500&type=restaurant&key=AIzaSyD_Nu881UFYUOgGaLliEQ8VpeYTw1LB1CE`
-//    )
-//    console.log(response)
-//    this.setState({restaurantlist: response.data.results})
-//    console.log(this.state.restaurantlist)
-//  }
+
  trydocumenu = async ()=>{
    console.log(this.state.zipcode)
    let res = ''
@@ -128,6 +119,7 @@ class App extends Component {
     console.log(response.data.orders)
     this.setState({userorders: response.data.orders})
     this.getRestaurant();
+    console.log('got em')
   }
   getCarrierOrders = async ()=>{
     let response = await axios.get(
@@ -225,7 +217,9 @@ class App extends Component {
   if(this.state.loggedIn != true && this.state.carrierloggedin != true){
   return (
     <div className="App">
-      <h1>DelivApp</h1>
+      <div className='sign'>
+      <span className='fast-flicker'>D</span>eliv<span className='flicker'>A</span>pp
+      </div>
       <header className="App-header">
         <nav>
           <Link to='/api/auth/signup/user'className='li'>ORDER FOOD</Link>
@@ -252,9 +246,11 @@ class App extends Component {
   {
     return(
       <div className='App'>
-        <h1>DelivApp</h1>
+        <div className='sign'>
+        <span className='fast-flicker'>D</span>eliv<span className='flicker'>A</span>pp
+        </div>
         <header className="App-header">
-          <h1>Welcome back, {this.state.userinfo.user.name}. What do you have a taste for?</h1>
+          <h2>Welcome back, {this.state.userinfo.user.name}. What do you have a taste for?</h2>
           <nav>
           <Link to='/api/auth/signup/user/account' className='li'>MY ACCOUNT</Link>
           <Link to='/api/auth/signup/user/orders'onClick={this.getOrders}className='li'>MY ORDERS</Link>
@@ -272,7 +268,8 @@ class App extends Component {
               <UserAccount {...routerProps} user={this.state.userinfo} updateUser={(e)=>this.updateUser(e)}/>
             )}/>
             <Route path='/api/auth/signup/user' component={(routerProps)=>(
-              <RestaurantList {...routerProps} restaurantlist={this.state.restaurantlist} userid={this.state.userid}/>)}/>
+              <RestaurantList {...routerProps} restaurantlist={this.state.restaurantlist} userid={this.state.userid}
+              getOrders={this.getOrders}/>)}/>
             
           </Switch>
         </main>
@@ -283,9 +280,11 @@ class App extends Component {
     console.log(this.state.carrierinfo.carrier.username)
     return(
       <div className='App'>
-        <h1>DelivApp</h1>
+        <div className='sign'>
+      <span className='fast-flicker'>D</span>eliv<span className='flicker'>A</span>pp
+      </div>
         <header className="App-header">
-          <h1>Welcome back, {this.state.carrierinfo.carrier.username}. Want to make money?</h1>
+          <h2>Welcome back, {this.state.carrierinfo.carrier.username}. Want to make money?</h2>
           <nav>
           <Link to='/api/auth/signup/carrier/account' className='li'>MY ACCOUNT</Link>
           <Link to='/api/auth/signup/carrier/orders'onClick={this.getCarrierOrders}className='li'>MY ORDERS</Link>

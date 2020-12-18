@@ -1,9 +1,16 @@
 .menuitem{
     border-style: solid;
-    border-color: black;
+    border-color: white;
     padding: 20px;
+    color: white;
     /* margin: 12px; */
 }
 button{
     font-size: 15px;
+}
+menu{
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 50%
+
 }

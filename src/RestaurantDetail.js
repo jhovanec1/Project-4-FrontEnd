@@ -17,7 +17,8 @@ export default class RestaurantDetail extends Component{
             cart: [],
             restaurant: '',
             orderCompleted: false,
-            restaurants: ''
+            restaurants: '',
+            
         }
         this.getList = this.getList.bind(this);
         this.addToCart = this.addToCart.bind(this);
@@ -40,7 +41,7 @@ addOrder = async ()=>{
             {
                 userId: userid,
                 restaurantId: restinfo.id,
-                carrierId: 4,
+                carrierId: 1,
                 item: line.name,
                 price: price,
                 isDelivered: false
@@ -52,6 +53,7 @@ addOrder = async ()=>{
     })
     this.setState({orderCompleted: true})
     // this.setState({cart: []})
+    this.props.getOrders();
     
     console.log('completed')
 }
@@ -64,6 +66,7 @@ getList(i){
     this.setState({isClicked: true})
     let list = this.props.restaurant.menus[0].menu_sections[i.target.id].menu_items
     this.setState({menu: list})
+    this.props.addclick();
 }
 addToCart(i){
     let item = this.state.menu[i.target.id]
@@ -90,7 +93,7 @@ addNewRestaurant = async (e)=>{
         }
     )
     console.log('Restaurant added')
-    this.checkRestaurant();
+    
 }
 checkRestaurant = async (e)=>{
     // e.preventDefault();
@@ -120,16 +123,18 @@ render(){
     
     return(
         <div>
+            <div className='cart'>
+            <h1>CART</h1>
+            <Cart getOrders = {this.props.getOrders} cart={this.state.cart} restaurant={this.props.restaurant} checkout={this.addOrder}/>
+            </div>
         <div className='menulist'>
             {menuList}
         </div>
         <div className='menu'>
-            <RestaurantMenu isClicked={this.state.isClicked} menu = {this.state.menu} addToCart={this.addToCart} addRestaurant={this.addRestaurant} orderCompleted={this.state.orderCompleted}/>
+            <RestaurantMenu isClicked={this.state.isClicked} menu = {this.state.menu} addToCart={this.addToCart} addRestaurant={this.addRestaurant}
+             orderCompleted={this.state.orderCompleted} clicks={this.props.clicks}/>
         </div>
-        <div className='cart'>
-            <h1>CART</h1>
-            <Cart cart={this.state.cart} restaurant={this.props.restaurant} checkout={this.addOrder}/>
-        </div>
+        
         </div>
         
         

@@ -10,9 +10,12 @@ export default class RestaurantList extends Component{
         this.state = {
             isclicked : false,
             restaurant: '',
-            restaurantdeats: ''
+            restaurantdeats: '',
+            buttoncolor: 'black',
+            clicks: 0
         }
         this.showDetails = this.showDetails.bind(this);
+        this.addclick = this.addclick.bind(this)
         // this.findDetails = this.findDetails.bind(this);
     }
 showDetails(i){
@@ -21,21 +24,28 @@ showDetails(i){
     let info = this.props.restaurantlist[i.target.id]
     // console.log(info)
     this.setState({restaurantdeats: info})
+    console.log(i)
+    this.setState({buttoncolor: 'grey'})
+    this.setState({clicks: 0})
     
 }
-
+addclick(){
+    let cur = this.state.clicks;
+    let newnum = cur + 1
+    this.setState({clicks: newnum})
+}
 render(){
     const restaurantList = this.props.restaurantlist.map((restaurant, index)=>{
         return(
-        <div className='list'>
+        <ul className='list'>
         
             <h1 className='restaurant'>{restaurant.restaurant_name}</h1>
             <p className='address'>{restaurant.address.formatted}</p>
             <p className='phone'>{restaurant.restaurant_phone}</p>
-            <button value={restaurant.restaurant_name} id={index} onClick={this.showDetails}>ORDER
+            <button value={restaurant.restaurant_name} id={index} onClick={this.showDetails}>SEE MENU
             </button>
         
-        </div>
+        </ul>
         )
     })
    
@@ -56,9 +66,12 @@ render(){
                 {restaurantList}
             </div>
             <div className='resdetails'>
-                <h1>{this.state.restaurant}</h1>
+                
                 <div>
-                    <RestaurantDetail restaurant= {this.state.restaurantdeats} userid = {this.props.userid}/>
+                {/* <h1>{this.state.restaurant}</h1> */}
+                    <RestaurantDetail restaurant= {this.state.restaurantdeats} userid = {this.props.userid}
+                    getOrders = {this.props.getOrders} isclicked={this.state.isclicked} addclick={this.addclick}
+                    clicks={this.state.clicks}/>
                 </div>
             </div>
         </div>

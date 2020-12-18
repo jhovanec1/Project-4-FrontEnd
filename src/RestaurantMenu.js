@@ -10,8 +10,9 @@ export default class RestaurantMenu extends Component{
 
 render(){
     console.log(this.props.orderCompleted)
+    console.log(this.props.clicks)
     // console.log(this.props.menu)
-    if(this.props.isClicked == false){
+    if(this.props.isClicked == false|| this.props.clicks == 0){
     return(
         <div>
             <h1>CLICK ON A MENU SECTION</h1>
@@ -27,17 +28,17 @@ render(){
     }else{
         const menu = this.props.menu.map((item, index)=>{
             return(
-                <div className='menuitem'>
+                <ul className='menuitem'>
                     <h1>{item.name}</h1><br/>
                     <a>${item.price}</a><br/>
                     <a>{item.description}</a><br/>
                     
                     <button onClick={this.props.addToCart} id={index}>ADD TO CART</button>
-                </div>
+                </ul>
             )
         })
         return(
-            <div>
+            <div className='menu'>
                 {menu}
             </div>
         )

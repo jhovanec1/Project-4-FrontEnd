@@ -11,7 +11,7 @@ render(){
     return(
         <div>
         <div>
-            <h1>Carrier Signup</h1>
+            <h2>Carrier Signup</h2>
             <form onSubmit={(e) => this.props.createCarrier(e)}>
             <input type="text" name="name" placeholder="Name" />
             <input type="text" name="username" placeholder="Username" />
@@ -20,7 +20,7 @@ render(){
             </form>
         </div>
         <div>
-            <h1>Carrier Login</h1>
+            <h2>Carrier Login</h2>
             <form onSubmit={(e) => this.props.loginCarrier(e)}>
             <input type="text" name="username" placeholder="Username" />
             <input type="text" name="password" placeholder="Password" />

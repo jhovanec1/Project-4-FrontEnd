@@ -52,7 +52,7 @@ render(){
                 <p>${order.price}</p>
                 <p>{hour}:{minute}.{seconds}{ampm} {date}</p>
                 {/* <p>{delivery}</p> */}
-                <button id = {order.id} onClick ={(e)=>this.props.completeOrder(e)}>DELIVERED</button>
+                <button id = {order.id} onClick ={(e)=>this.props.completeOrder(e)}>MARK DELIVERED</button>
             </div>
         )
     })

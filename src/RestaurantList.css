@@ -1,20 +1,27 @@
 .reslist{
+    
+    color: white;
+    overflow: hidden;
     overflow-y: scroll;
+    height: 700px;
 }
 .list{
     border-style: solid;
-    border-color: black;
+    border-color:white;
     text-decoration: none;
     margin: 10px;
+    color: white;
 }
 h1{
     text-decoration: none;
+    color: white;
 }
 p{
     text-decoration: none;
+    color: white;
 }
 button{
-    background-color: black;
+    background-color: grey;
     color: white;
     position: relative;
     /* left: 150vh; */
@@ -63,8 +70,10 @@ button:hover span:after {
 }
 .reslist1{
   grid-column: 1;
-  /* overflow: auto; */
+  color: white;
+  overflow: hidden;
   overflow-y: scroll;
+  height: 700px;
 }
 .resdetails{
   grid-column: 2;

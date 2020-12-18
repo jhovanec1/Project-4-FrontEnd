@@ -1,8 +1,9 @@
 .cart{
     list-style-type: none;
     border-style: solid;
-    border-color: black;
+    border-color: grey;
     margin: 8px;
+    color: white;
     /* display: inline-block; */
 
 }

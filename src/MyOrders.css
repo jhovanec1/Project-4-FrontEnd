@@ -2,4 +2,10 @@
     border-style: solid;
     border-color: black;
     margin: 13px;
+    /* display: inline-block; */
+}
+.orderlist{
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 700px;
 }

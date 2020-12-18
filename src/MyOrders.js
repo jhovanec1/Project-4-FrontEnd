@@ -47,13 +47,13 @@ render(){
         
         // console.log(time);
         return(
-            <div className='orderdiv'>
+            <ul className='orderdiv'>
                 <h1>{favoriteBook.name}</h1>
                 <p>{order.item}</p>
                 <p>${order.price}</p>
                 <p>{hour}:{minute}.{seconds}{ampm} {date}</p>
                 <p>{delivery}</p>
-            </div>
+            </ul>
         )
     })
     return(

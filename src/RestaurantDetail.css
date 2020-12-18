@@ -3,7 +3,13 @@
     background-color: black;
     white-space: nowrap;
     /* position: relative; */
+    color: white;
 
+}
+.menu{
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 500px;
 }
 .menulist a{
     
