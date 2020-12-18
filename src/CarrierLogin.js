@@ -9,6 +9,12 @@ export default class CarrierLogin extends Component{
     }
 
 render(){
+    const loading = ()=>{
+        if(this.props.status == 'loading'){
+            return <p className="loading">Loading</p>
+        }
+    
+    }
     return(
         <div>
         <div>
@@ -19,6 +25,11 @@ render(){
             <input type="text" name="password" placeholder="Password" />
             <input type="submit" value="SIGN UP" />
             </form>
+        </div>
+        <br/>
+        <div>
+                {loading()}
+                {/* <p className="loading">Loading</p> */}
         </div>
         <div>
             <h2>Carrier Login</h2>

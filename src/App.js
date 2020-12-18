@@ -240,9 +240,9 @@ class App extends Component {
         loginUser={(e)=> this.loginUser(e)} status = {this.state.status}/>)}/>
       <Route path = '/api/auth/signup/carrier' component={(routerProps)=> (
         <CarrierLogin {...routerProps} createCarrier={(e) => this.createCarrier(e)}
-        loginCarrier={(e)=>this.loginCarrier(e)}/>)}/>
+        loginCarrier={(e)=>this.loginCarrier(e)} status = {this.state.status}/>)}/>
       <Route path = '/api/auth/signup/restaurant' component={(routerProps)=> (
-        <RestaurantLogin {...routerProps} createRestaurant={(e) => this.createRestaurant(e)} />)}/>
+        <RestaurantLogin {...routerProps} createRestaurant={(e) => this.createRestaurant(e)} status = {this.state.status}/>)}/>
       </Switch>
       </main>
     </div>
