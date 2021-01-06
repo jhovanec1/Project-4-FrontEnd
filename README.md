@@ -1,4 +1,6 @@
-# Project 4
+# Project 4--- DelivApp
+
+Heroku URL: https://jhovanec-project4-frontend.herokuapp.com/
 
 For the completion of SEI and Project 4 I created a food delivery marketplace called 'DelivApp'. The app consists of
 a backend using NodeJS and a frontend using REACT. The main user stories of the app are the ability to create an account and then 
