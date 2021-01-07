@@ -35,6 +35,7 @@ render(){
             <div>
 
             <h1>Been here before? Log In</h1>
+            <h2>USE USERNAME: 1 AND PASSWORD: 1 TO SEE FEATURES</h2>
             <form onSubmit={(e) => this.props.loginUser(e)}>
             <input type="text" name="username" placeholder="Username" />
             <input type="text" name="password" placeholder="Password" />
