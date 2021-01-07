@@ -1,6 +1,8 @@
 # Project 4--- DelivApp
 
 LINK NO LONGER WORKS FULLY DUE TO API USED CHANGING FORMATTING AND STRUCTURE OF NEEDED FUNCTIONALITY
+
+
 HEROKU URL: https://jhovanec-project4-frontend.herokuapp.com/
 
 For the completion of SEI and Project 4 I created a food delivery marketplace called 'DelivApp'. The app consists of
