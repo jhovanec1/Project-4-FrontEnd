@@ -40,7 +40,7 @@ render(){
         <ul className='list'>
         
             <h1 className='restaurant'>{restaurant.restaurant_name}</h1>
-            <p className='address'>{restaurant.address.formatted}</p>
+            {/* <p className='address'>{restaurant.address.formatted}</p> */}
             <p className='phone'>{restaurant.restaurant_phone}</p>
             <button value={restaurant.restaurant_name} id={index} onClick={this.showDetails}>SEE MENU
             </button>
