@@ -52,7 +52,7 @@ class App extends Component {
    let res = ''
   const options = {
     method: 'GET',
-    url: `https://documenu.p.rapidapi.com/restaurants/zip_code/${this.state.zipcode}`,
+    url: `https://documenu.p.rapidapi.com/restaurants/zip_code/60015`,
     params: {size: '30', fullmenu: 'true', top_cuisines: 'true', page: '1'},
     headers: {
       'x-api-key': 'ab1514d61b203d8917678cc66a9aa6c5',
